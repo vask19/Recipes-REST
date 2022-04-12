@@ -3,27 +3,31 @@ package com.example.recipesrest.controller;
 
 
 import com.example.recipesrest.model.Recipe;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.recipesrest.service.RecipeService;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 public class RecipeController {
-    private Recipe recipe = new Recipe();
 
-    @GetMapping("/api/recipe")
-    public Recipe getRecipe(){
-        return recipe;
+
+    private final RecipeService recipeService;
+
+    public RecipeController(RecipeService recipeService) {
+        this.recipeService = recipeService;
+    }
+
+
+    @GetMapping("/api/recipe/{id}")
+    public Recipe getRecipe(@PathVariable int id){
+        return recipeService.getRecipe(id);
 
     }
 
     @PostMapping("/api/recipe")
-    public Recipe postRecipe(@RequestBody Recipe recipe){
-        System.out.println(recipe);
-        this.recipe = recipe;
+    public Integer postRecipe(@RequestBody Recipe recipe){
 
-        return null;
+
+        return recipeService.addNewRecipe(recipe);
     }
 }

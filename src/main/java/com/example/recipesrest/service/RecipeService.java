@@ -16,12 +16,12 @@ public class RecipeService {
     }
 
     public Recipe getRecipe(int id){
-        if (database.containsKey(id))
-           return database.get(id);
+        if (database.containsKey(id-1))
+           return database.get(id-1);
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
-    public int addNewRecipe(Recipe recipe){
+    public Integer addNewRecipe(Recipe recipe){
         database.put(counter++,recipe);
         return counter;
     }

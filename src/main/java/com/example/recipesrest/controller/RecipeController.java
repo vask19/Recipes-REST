@@ -3,11 +3,15 @@ package com.example.recipesrest.controller;
 
 
 import com.example.recipesrest.model.Recipe;
+import com.example.recipesrest.model.RecipeWithOnlyId;
 import com.example.recipesrest.service.RecipeService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@ResponseStatus(HttpStatus.OK)
 public class RecipeController {
 
 
@@ -24,10 +28,12 @@ public class RecipeController {
 
     }
 
-    @PostMapping("/api/recipe")
-    public Integer postRecipe(@RequestBody Recipe recipe){
+    @PostMapping("/api/recipe/new")
+    public RecipeWithOnlyId postRecipe(@RequestBody Recipe recipe){
+
+        return new RecipeWithOnlyId(recipeService.addNewRecipe(recipe));
 
 
-        return recipeService.addNewRecipe(recipe);
+
     }
 }

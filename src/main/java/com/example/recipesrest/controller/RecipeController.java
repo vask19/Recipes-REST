@@ -23,8 +23,8 @@ public class RecipeController {
 
 
     @GetMapping("/api/recipe/{id}")
-    public Recipe getRecipe(@PathVariable int id){
-        return recipeService.getRecipe(id);
+    public Recipe getRecipe(@PathVariable Long id){
+        return recipeService.getRecipeById(id).get();
 
     }
 
@@ -33,7 +33,10 @@ public class RecipeController {
 
         return new RecipeWithOnlyId(recipeService.addNewRecipe(recipe));
 
+    }
 
+    @DeleteMapping("/api/recipe/{id}")
+    public void deleteRecipe(@PathVariable int id){
 
     }
 }

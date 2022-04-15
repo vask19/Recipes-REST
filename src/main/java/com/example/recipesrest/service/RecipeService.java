@@ -1,28 +1,28 @@
 package com.example.recipesrest.service;
 
 import com.example.recipesrest.model.Recipe;
-import org.springframework.http.HttpStatus;
+import com.example.recipesrest.repository.RecipeRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Optional;
 
 @Service
 public class RecipeService {
-    private ConcurrentHashMap<Integer, Recipe> database;
-    private static int counter = 0;
-    {
-        database = new ConcurrentHashMap<>();
+
+    private final RecipeRepository recipeRepository;
+
+    public RecipeService(RecipeRepository recipeRepository) {
+        this.recipeRepository = recipeRepository;
     }
 
-    public Recipe getRecipe(int id){
-        if (database.containsKey(id-1))
-           return database.get(id-1);
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+    public Optional<Recipe> getRecipeById(Long id){
+        return recipeRepository.findById(id);
+
     }
 
     public Integer addNewRecipe(Recipe recipe){
-        database.put(counter++,recipe);
-        return counter;
+        return null;
+
     }
 }

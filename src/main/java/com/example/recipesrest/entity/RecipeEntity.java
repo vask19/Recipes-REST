@@ -10,8 +10,8 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "recipe")
-@Data
+//@Table(name = "recipe")
+//@Data
 
 public class RecipeEntity {
 
@@ -25,12 +25,14 @@ public class RecipeEntity {
     @Column
     private String description;
 
-   /* @Column
+    @Column
+    @ElementCollection
     private List<String> ingredients;
 
     @Column
+    @ElementCollection
     private List<String> directions;
-    */
+
     
 
 }

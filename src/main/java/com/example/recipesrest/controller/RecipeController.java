@@ -2,6 +2,7 @@ package com.example.recipesrest.controller;
 
 
 
+import com.example.recipesrest.entity.RecipeEntity;
 import com.example.recipesrest.model.Recipe;
 import com.example.recipesrest.model.RecipeWithOnlyId;
 import com.example.recipesrest.service.RecipeService;
@@ -23,13 +24,13 @@ public class RecipeController {
 
 
     @GetMapping("/api/recipe/{id}")
-    public Recipe getRecipe(@PathVariable Long id){
+    public RecipeEntity getRecipe(@PathVariable Long id){
         return recipeService.getRecipeById(id).get();
 
     }
 
     @PostMapping("/api/recipe/new")
-    public RecipeWithOnlyId postRecipe(@RequestBody Recipe recipe){
+    public RecipeWithOnlyId postRecipe(@RequestBody RecipeEntity recipe){
 
         return new RecipeWithOnlyId(recipeService.addNewRecipe(recipe));
 

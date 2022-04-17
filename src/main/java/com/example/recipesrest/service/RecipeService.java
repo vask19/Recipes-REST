@@ -2,7 +2,9 @@ package com.example.recipesrest.service;
 
 import com.example.recipesrest.entity.RecipeEntity;
 import com.example.recipesrest.repository.RecipeRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -17,12 +19,14 @@ public class RecipeService {
 
 
     public Optional<RecipeEntity> getRecipeById(Long id){
-        return recipeRepository.findById(id);
+        Optional<RecipeEntity> entity =  recipeRepository.findById(id);
+        if (entity.isPresent())
+            return entity;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
     }
 
     public Long addNewRecipe(RecipeEntity savedRecipe){
-        Integer id = 0;
         recipeRepository.save(savedRecipe);
         recipeRepository.findAll()
                 .forEach(recipeEntity -> {
@@ -31,12 +35,16 @@ public class RecipeService {
 
                 });
 
-         return savedRecipe.getId();
+        return savedRecipe.getId();
 
     }
 
+
     public void deleteRecipeById(Long id){
-        recipeRepository.deleteById(id);
+        if (recipeRepository.findById(id).isPresent())
+            recipeRepository.deleteById(id);
+
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
 }

@@ -8,11 +8,17 @@ import com.example.recipesrest.model.RecipeWithOnlyId;
 import com.example.recipesrest.service.RecipeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+
 
 
 @RestController
 @ResponseStatus(HttpStatus.OK)
+@Validated
 public class RecipeController {
 
 
@@ -30,13 +36,14 @@ public class RecipeController {
     }
 
     @PostMapping("/api/recipe/new")
-    public RecipeWithOnlyId postRecipe(@RequestBody RecipeEntity recipe){
-
+    public RecipeWithOnlyId postRecipe(@RequestBody @Valid RecipeEntity recipe){
+        System.out.println(recipe);
         return new RecipeWithOnlyId(recipeService.addNewRecipe(recipe));
 
     }
 
     @DeleteMapping("/api/recipe/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRecipe(@PathVariable Long id){
         recipeService.deleteRecipeById(id);
 

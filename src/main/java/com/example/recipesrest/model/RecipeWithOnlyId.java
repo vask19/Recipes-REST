@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecipeWithOnlyId {
-    private Integer id;
+    private Long id;
 }

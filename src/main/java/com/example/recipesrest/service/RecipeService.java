@@ -1,7 +1,6 @@
 package com.example.recipesrest.service;
 
 import com.example.recipesrest.entity.RecipeEntity;
-import com.example.recipesrest.model.Recipe;
 import com.example.recipesrest.repository.RecipeRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +21,22 @@ public class RecipeService {
 
     }
 
-    public Integer addNewRecipe(RecipeEntity recipe){
-        return null;
+    public Long addNewRecipe(RecipeEntity savedRecipe){
+        Integer id = 0;
+        recipeRepository.save(savedRecipe);
+        recipeRepository.findAll()
+                .forEach(recipeEntity -> {
+                    if (savedRecipe.equals(recipeEntity))
+                        savedRecipe.setId(recipeEntity.getId());
+
+                });
+
+         return savedRecipe.getId();
 
     }
+
+    public void deleteRecipeById(Long id){
+        recipeRepository.deleteById(id);
+    }
+
 }

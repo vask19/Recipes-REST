@@ -3,6 +3,7 @@ package com.example.recipesrest.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,8 +11,10 @@ import java.util.List;
 
 
 @Entity
-//@Table(name = "recipe")
-//@Data
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 
 public class RecipeEntity {
 

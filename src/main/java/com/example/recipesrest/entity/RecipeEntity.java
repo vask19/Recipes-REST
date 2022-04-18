@@ -3,6 +3,7 @@ package com.example.recipesrest.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jdk.jfr.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -34,6 +36,13 @@ public class RecipeEntity {
     @NotBlank
     private String name;
 
+    @Column
+    @NotBlank
+    private String category;
+
+    @Column
+    private LocalDateTime date;
+
 
     @Column
     @NotBlank
@@ -48,6 +57,10 @@ public class RecipeEntity {
     @ElementCollection
     @NotEmpty
     private List<String> directions;
+
+    {
+        date = LocalDateTime.now();
+    }
 
 
 }

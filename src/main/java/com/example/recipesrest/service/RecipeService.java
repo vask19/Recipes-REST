@@ -1,11 +1,13 @@
 package com.example.recipesrest.service;
 
 import com.example.recipesrest.entity.RecipeEntity;
+import com.example.recipesrest.model.Recipe;
 import com.example.recipesrest.repository.RecipeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -45,6 +47,22 @@ public class RecipeService {
             recipeRepository.deleteById(id);
 
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+
+    public void updateRecipe(RecipeEntity recipe,Long id){
+        recipeRepository.findById(id)
+                .ifPresent(recipeEntity -> {
+                    recipeEntity.setId(id);
+                    recipeEntity.setCategory(recipe.getCategory());
+                    recipeEntity.setDate(LocalDateTime.now());
+                    recipeEntity.setDescription(recipe.getDescription());
+                    recipeEntity.setIngredients(recipe.getIngredients());
+                    recipeEntity.setDirections(recipe.getDirections());
+                    recipeRepository.save(recipeEntity);
+                });
+
+
+
     }
 
 }

@@ -50,32 +50,37 @@ public class RecipeService {
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
+
+    //TODO
     public void updateRecipe(RecipeEntity recipe,Long id){
-        recipeRepository.findById(id)
-                .ifPresent(recipeEntity -> {
-                    recipeEntity.setId(id);
-                    recipeEntity.setCategory(recipe.getCategory());
-                    recipeEntity.setDate(LocalDateTime.now());
-                    recipeEntity.setDescription(recipe.getDescription());
-                    recipeEntity.setIngredients(recipe.getIngredients());
-                    recipeEntity.setDirections(recipe.getDirections());
-                    recipeRepository.save(recipeEntity);
-                });
 
-
-
+        Optional<RecipeEntity> updatedRecipe = recipeRepository.findById(id);
+        updatedRecipe
+                .ifPresentOrElse(
+                        (recipeEntity) -> {
+                            recipeEntity.setId(id);
+                            recipeEntity.setName(recipe.getName());
+                            recipeEntity.setCategory(recipe.getCategory());
+                            recipeEntity.setDate(LocalDateTime.now());
+                            recipeEntity.setDescription(recipe.getDescription());
+                            recipeEntity.setIngredients(recipe.getIngredients());
+                            recipeEntity.setDirections(recipe.getDirections());
+                            recipeRepository.save(recipeEntity);
+                        },
+                        ()->{
+                            throw new ResponseStatusException(HttpStatus.NOT_FOUND);});
     }
 
     public List<RecipeEntity> getRecipesByName(Optional<String> name) {
 
-        return recipeRepository.findAllByNameOrderByDateDesc(name.get());
+        return recipeRepository.findByNameIgnoreCaseOrderByDateDesc(name.get());
 
 
     }
 
     public List<RecipeEntity> getRecipesByCategory(Optional<String> category) {
 
-        return recipeRepository.findAllByCategoryOrderByDateDesc(category.get());
+        return recipeRepository.findByCategoryIgnoreCaseOrderByDateDesc(category.get());
     }
 
     public void emptyQuery() {

@@ -9,9 +9,8 @@ import java.util.List;
 
 @Repository
 public interface RecipeRepository extends CrudRepository<RecipeEntity,Long> {
-    List<RecipeEntity> findAllByCategoryOrderByDateDesc(String category);
-    List<RecipeEntity> findAllByNameOrderByDateDesc(String name);
-
+    List<RecipeEntity> findByCategoryIgnoreCaseOrderByDateDesc(String category);
+    List<RecipeEntity> findByNameIgnoreCaseOrderByDateDesc(String name);
 
 
 

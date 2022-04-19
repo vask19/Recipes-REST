@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 @RestController
 @ResponseStatus(HttpStatus.OK)
 @Validated
@@ -39,8 +40,7 @@ public class RecipeController {
 
     }
 
-    @Max(1)
-    @Min(1)
+
     @GetMapping("/api/recipe/search")
     public List<RecipeEntity> searchRecipe(@RequestParam(required = false) Optional<String> name,
                                            @RequestParam(required = false) Optional<String> category){
@@ -70,6 +70,7 @@ public class RecipeController {
 
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/api/recipe/{id}")
     public void updateRecipe(@PathVariable Long id,
                              @RequestBody @Valid RecipeEntity recipe){
@@ -77,5 +78,4 @@ public class RecipeController {
         recipeService.updateRecipe(recipe,id);
 
     }
-
 }

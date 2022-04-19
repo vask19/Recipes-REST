@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -65,4 +66,19 @@ public class RecipeService {
 
     }
 
+    public List<RecipeEntity> getRecipesByName(Optional<String> name) {
+
+        return recipeRepository.findAllByNameOrderByDateDesc(name.get());
+
+
+    }
+
+    public List<RecipeEntity> getRecipesByCategory(Optional<String> category) {
+
+        return recipeRepository.findAllByCategoryOrderByDateDesc(category.get());
+    }
+
+    public void emptyQuery() {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    }
 }

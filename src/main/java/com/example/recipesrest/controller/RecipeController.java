@@ -10,10 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-
-
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -34,6 +38,23 @@ public class RecipeController {
         return recipeService.getRecipeById(id).get();
 
     }
+
+    @Max(1)
+    @Min(1)
+    @GetMapping("/api/recipe/search")
+    public List<RecipeEntity> searchRecipe(@RequestParam(required = false) Optional<String> name,
+                                           @RequestParam(required = false) Optional<String> category){
+        if (name.isPresent())
+            return recipeService.getRecipesByName(name);
+        else if (category.isPresent())
+            return recipeService.getRecipesByCategory(category);
+
+        recipeService.emptyQuery();
+        return Collections.emptyList();
+
+
+    }
+
 
     @PostMapping("/api/recipe/new")
     public RecipeWithOnlyId postRecipe(@RequestBody @Valid RecipeEntity recipe){

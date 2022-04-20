@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface RecipeRepository extends CrudRepository<RecipeEntity,Long> {
     List<RecipeEntity> findByCategoryIgnoreCaseOrderByDateDesc(String category);
-    List<RecipeEntity> findByNameIgnoreCaseOrderByDateDesc(String name);
+    List<RecipeEntity> findByNameIgnoreCaseContainsOrderByDateDesc(String name);
 
 
 

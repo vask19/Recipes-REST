@@ -73,7 +73,7 @@ public class RecipeService {
 
     public List<RecipeEntity> getRecipesByName(Optional<String> name) {
 
-        return recipeRepository.findByNameIgnoreCaseOrderByDateDesc(name.get());
+        return recipeRepository.findByNameIgnoreCaseContainsOrderByDateDesc(name.get());
 
 
     }

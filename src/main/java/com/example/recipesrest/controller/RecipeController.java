@@ -19,8 +19,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-
-
 @RestController
 @ResponseStatus(HttpStatus.OK)
 @Validated

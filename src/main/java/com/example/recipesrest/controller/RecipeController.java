@@ -1,32 +1,23 @@
 package com.example.recipesrest.controller;
 
-
-
 import com.example.recipesrest.entity.RecipeEntity;
-import com.example.recipesrest.model.Recipe;
 import com.example.recipesrest.model.RecipeWithOnlyId;
 import com.example.recipesrest.service.RecipeService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 @ResponseStatus(HttpStatus.OK)
 @Validated
 public class RecipeController {
 
-
     private final RecipeService recipeService;
-
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }

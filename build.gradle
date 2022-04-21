@@ -19,21 +19,29 @@ repositories {
 }
 
 dependencies {
+
+    //web
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //database
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-
-
     runtimeOnly 'com.h2database:h2'
+
+    //junit
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
+    //validator
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
 
 }

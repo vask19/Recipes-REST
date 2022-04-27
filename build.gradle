@@ -43,6 +43,14 @@ dependencies {
     //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
+    //gson
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+
+    //JWT
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
+
+
+
 
 }
 

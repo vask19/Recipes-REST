@@ -1,5 +1,6 @@
 package com.example.recipesrest.service;
 
+import com.example.recipesrest.dto.UserDTO;
 import com.example.recipesrest.entity.User;
 import com.example.recipesrest.entity.enums.ERole;
 import com.example.recipesrest.exception.UserExistException;
@@ -7,10 +8,12 @@ import com.example.recipesrest.payload.request.SignupRequest;
 import com.example.recipesrest.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.security.Principal;
+
 
 @Service
 public class UserService {
@@ -44,6 +47,29 @@ public class UserService {
         }
     }
 
+    public User getCurrentUser(Principal principal){
+        return getUserByPrincipal(principal);
+    }
 
 
+    private User getUserByPrincipal(Principal principal){
+        String username = principal.getName();
+        return userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found with username"));
+    }
+
+
+    public User getUserById(Long id) {
+
+        return userRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("User not found"));
+
+    }
+
+    //TODO
+    public User updateUser(UserDTO userDTO, Principal principal) {
+        User user = getUserByPrincipal(principal);
+
+        return userRepository.save(user);
+
+    }
 }

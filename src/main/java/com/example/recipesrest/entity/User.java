@@ -11,7 +11,6 @@ import javax.persistence.*;
 import java.util.*;
 
 @Data
-
 @Entity
 
 public class User implements UserDetails {
@@ -36,7 +35,7 @@ public class User implements UserDetails {
     private String role;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "user",orphanRemoval = true)
-    private List<RecipeEntity> recipeEntities = new ArrayList<>();
+    private List<Recipe> recipeEntities = new ArrayList<>();
 
     @Transient
     private Collection<? extends GrantedAuthority> authorities;

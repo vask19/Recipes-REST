@@ -21,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-public class RecipeEntity {
+public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

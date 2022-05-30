@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.Optional;
 
 
 @Service
@@ -71,5 +72,9 @@ public class UserService {
 
         return userRepository.save(user);
 
+    }
+
+    public Optional<User> findUserByUserName(String username) {
+        return userRepository.findUserByUsername(username);
     }
 }

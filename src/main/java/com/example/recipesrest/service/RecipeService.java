@@ -3,6 +3,7 @@ package com.example.recipesrest.service;
 import com.example.recipesrest.dto.RecipeDTO;
 import com.example.recipesrest.entity.Recipe;
 import com.example.recipesrest.entity.User;
+import com.example.recipesrest.exception.RecipeNotFoundException;
 import com.example.recipesrest.repository.RecipeRepository;
 import com.example.recipesrest.repository.UserRepository;
 import org.slf4j.Logger;
@@ -131,4 +132,17 @@ public class RecipeService {
         User user = getUserByPrincipal(principal);
         return recipeRepository.findAllByUser(user);
     }
+
+    public void deletePost(long postId, Principal principal) {
+        Recipe recipe = getRecipeById(postId, principal);
+        recipeRepository.delete(recipe);
+    }
+
+    private Recipe getRecipeById(long postId, Principal principal) {
+        User user = getUserByPrincipal(principal);
+        return recipeRepository.findRecipeEntitiesByIdAndUser(postId, user)
+                .orElseThrow(() -> new RecipeNotFoundException("Post cannot be found for username: " ));
+    }
+
+
 }

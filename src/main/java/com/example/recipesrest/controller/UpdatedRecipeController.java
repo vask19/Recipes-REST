@@ -70,10 +70,10 @@ public class UpdatedRecipeController {
     }
 
 
-    //TODO
-//    public ResponseEntity<MessageResponse> deleteRecipe(@PathVariable("recipe") String recipeId,Principal principal){
-//
-//        recipeService.deleteRecipeById(Long.parseLong(recipeId),principal);
-//        return new
-//    }
+
+    @PostMapping("/{postId}/delete")
+    public ResponseEntity<MessageResponse> deletePost(@PathVariable("postId") String postId, Principal principal) {
+        recipeService.deletePost(Long.parseLong(postId), principal);
+        return new ResponseEntity<>(new MessageResponse("Post was deleted"), HttpStatus.OK);
+    }
 }

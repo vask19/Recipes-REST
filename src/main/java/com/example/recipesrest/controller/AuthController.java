@@ -1,5 +1,6 @@
 package com.example.recipesrest.controller;
 
+import com.example.recipesrest.exception.UserExistException;
 import com.example.recipesrest.payload.request.LoginRequest;
 import com.example.recipesrest.payload.request.SignupRequest;
 import com.example.recipesrest.payload.response.JWTTokenSuccessResponse;
@@ -9,6 +10,7 @@ import com.example.recipesrest.security.SecurityConstants;
 import com.example.recipesrest.service.UserService;
 import com.example.recipesrest.validation.ResponseErrorValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -62,7 +64,15 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody SignupRequest signupRequest, BindingResult bindingResult){
         ResponseEntity<Object> errors = responseErrorValidator.mapValidationService(bindingResult);
-        if (!ObjectUtils.isEmpty(errors)) return errors;
+        if (!ObjectUtils.isEmpty(errors))
+            return errors;
+        if (userService.findUserByUserName(signupRequest.getUsername()).isPresent()) {
+            ResponseEntity<Object> userExistError = new ResponseEntity<Object>(HttpStatus.CONFLICT);
+
+
+            return userExistError;
+        }
+
 
         userService.createUser(signupRequest);
         return ResponseEntity.ok(new MessageResponse("User registration successfully"));
